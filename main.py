@@ -27,7 +27,7 @@ class KeywordQueryEventListener(EventListener):
         options = []
 
 
-        for i in range(5):
+        for i in range(6):
 
             data = { "option": i }
 
