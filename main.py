@@ -47,6 +47,8 @@ class KeywordQueryEventListener(EventListener):
 
             if i == 4: optionName = "Logout"
 
+            if i == 4: optionName = "Lock"
+
 
             options.append(ExtensionResultItem(icon=optionIcon,
                                                     name=optionName,
@@ -64,17 +66,19 @@ class ExecuteSession(EventListener):
         option = data["option"]
 
 
-        if option == 0: command = "systemctl poweroff"
-        if option == 1: command = "systemctl reboot"
+        if option == 0: command = "gnome-session-quit --power-off"
+        if option == 1: command = "gnome-session-quit --reboot"
         if option == 2: command = "systemctl suspend"
         if option == 3: command = "systemctl hibernate"
         if option == 4:
 
             desktopEnvironment = extension.preferences["desktop-environment"]
 
-            if(desktopEnvironment == "gnome"): command = "gnome-session-quit --no-prompt"
+            if(desktopEnvironment == "gnome"): command = "gnome-session-quit"
             if(desktopEnvironment == "kde"): command = "qdbus org.kde.ksmserver /KSMServer logout 0 0 1"
 
+        if option == 5: command = "xdg-screensaver lock"
+        
         subprocess.run( [command], shell=True )
 
         return HideWindowAction()
